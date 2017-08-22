@@ -13,7 +13,11 @@ var uglify = require('gulp-uglify');               //js压缩插件
 var concat = require('gulp-concat');               //js合并插件
 gulp.task('scripts', function() {
     gulp.src('js/*.js')               //需要操作的源文件
-        .pipe(uglify())               //压缩js文件
+        .pipe(uglify())
+        .on('error', function(err) {
+            console.log('js Error!', err.message);
+            this.end();
+        })               //压缩js文件
         // .pipe(concat('app.js'))       //把js文件合并成app.js文件
         .pipe(gulp.dest('dist/js'))   //把操作好的文件放到dist/js目录下
         .pipe(browsersync.stream());  //文件有更新自动执行
